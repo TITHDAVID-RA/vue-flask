@@ -7,8 +7,9 @@ on:
     branches: [main]
 
 env:
-  AZURE_BACKEND_APP_NAME: secureshop-backend-app
-  AZURE_FRONTEND_APP_NAME: secureshop-frontend-app
+env:
+  AZURE_BACKEND_APP_NAME: secureshop-production-app
+  AZURE_FRONTEND_APP_NAME: secureshop-frontend-app  # Double check if your frontend app name in the portal matches this, or update it here too!
   PYTHON_VERSION: '3.11'
   NODE_VERSION: '18'
 
