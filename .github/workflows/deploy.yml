@@ -63,7 +63,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VUE_APP_API_URL: https://secureshop-production-app.azurewebsites.net/api
+          VUE_APP_API_URL: https://secureshop-production-app-drd6f7dnbza5gcdu.canadacentral-01.azurewebsites.net/api
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
