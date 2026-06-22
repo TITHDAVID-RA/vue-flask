@@ -96,7 +96,7 @@ jobs:
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./backend
 
-  deploy-frontend:
+deploy-frontend:
     needs: [build-frontend, deploy-backend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -106,11 +106,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: frontend-build
-          path: ./frontend-dist/dist
+          path: ./frontend-dist  # Downloads the contents of 'dist' straight into this directory
 
       - name: Deploy to Azure Web App (Frontend)
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_FRONTEND_APP_NAME }}
           publish-profile: ${{ secrets.AZURE_FRONTEND_PUBLISH_PROFILE }}
-          package: ./frontend-dist
+          package: ./frontend-dist  # Deploys the flat static files right into /home/site/wwwroot
