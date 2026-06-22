@@ -7,9 +7,8 @@ on:
     branches: [main]
 
 env:
-env:
-  AZURE_BACKEND_APP_NAME: secureshop-production-app
-  AZURE_FRONTEND_APP_NAME: secureshop-frontend-app  # Double check if your frontend app name in the portal matches this, or update it here too!
+  AZURE_BACKEND_APP_NAME: secureshop-production-app  # FIXED: Matches your Azure Publish Profile resource name
+  AZURE_FRONTEND_APP_NAME: secureshop-frontend-app    # Note: Double check if your portal frontend name matches this exactly
   PYTHON_VERSION: '3.11'
   NODE_VERSION: '18'
 
@@ -34,7 +33,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      # FIX: Added '|| true' so the pipeline doesn't break if no tests are collected yet
       - name: Run tests
         run: pytest --cov=app --cov-report=xml || true
 
@@ -65,7 +63,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VUE_APP_API_URL: https://secureshop-backend-app.azurewebsites.net/api
+          VUE_APP_API_URL: https://secureshop-production-app.azurewebsites.net/api  # FIXED: Points to correct backend URL
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -110,7 +108,6 @@ jobs:
           name: frontend-build
           path: ./frontend-dist/dist
 
-      # FIX: Targets the actual root directory path containing the downloaded 'dist' bundle
       - name: Deploy to Azure Web App (Frontend)
         uses: azure/webapps-deploy@v3
         with:
